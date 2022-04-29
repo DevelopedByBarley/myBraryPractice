@@ -10,6 +10,7 @@ router.get('/', (req, res) => {
 router.get('/new', (req, res) => {
   const author = new Author({});
   res.render('author/new', { author: author });
+  console.log(author)
 })
 
 router.post('/', bodyParser.json(), async (req, res) => {

@@ -7,6 +7,7 @@ const bodyParser = require('body-parser');
 //Set routers
 const indexRouter = require('./routes/index')
 const authorRouter = require('./routes/author')
+const bookRouter = require('./routes/books')
 
 
 /** Server  */
@@ -25,6 +26,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 app.use('/', indexRouter)
 app.use('/authors', authorRouter)
+app.use('/books', bookRouter)
 
 
 
