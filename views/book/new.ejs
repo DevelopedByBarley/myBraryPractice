@@ -1,0 +1,30 @@
+<h1>Create Book</h1>
+<form action="/books" method="POST" enctype="multipart/form-data">
+  <div>
+    <input type="text" name="title" value="<%= books.title %>">
+  </div>
+  <div>
+    <select name="author">
+      <%authors.forEach((author) => {%>
+        <% if(author.id === books.author) {%>
+          <option selected value="<%= author.id %>" label="<%= author.name %> "><%= author.name %></option>
+        <%} else {%>
+          <option value="<%= author.id %>" label="<%= author.name %> "><%= author.name %></option>
+        <%}%>
+      <%})%>
+    </select>
+  </div>
+  <div>
+    <input type="file" name="cover">
+  </div>
+  <div>
+    <input type="number" min="1" name="pageCount" id="pageCount" <%= books.pageCount %>>
+  </div>
+  <div>
+    <input type="date" name="publishDate" id="publishDate" value="<%= books.publishDate != null ? books.publishDate.toIsoString().split('T')[0] : '' %>">
+  </div>
+  <div>
+    <textarea name="description" id="" cols="30" rows="10" value="<%= books.description%> ">Write your description...</textarea>
+  </div>
+  <button type="submit">Create Book</button>
+</form>

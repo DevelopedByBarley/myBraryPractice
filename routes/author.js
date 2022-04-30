@@ -3,8 +3,13 @@ const router = express.Router();
 const bodyParser = require('body-parser');
 const Author = require('../models/author');
 
-router.get('/', (req, res) => {
-  res.render('author/index')
+router.get('/', async (req, res) => {
+  const searchOptions = {
+    name: new RegExp(req.query.name, 'i')
+  };
+
+  const author = await Author.find(searchOptions);
+  res.render('author/index', {authors: author})
 })
 
 router.get('/new', (req, res) => {

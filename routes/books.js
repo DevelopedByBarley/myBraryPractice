@@ -1,28 +1,35 @@
 const express = require('express');
 const router = express.Router();
 const bodyParser = require('body-parser');
+const multer  = require('multer')
+const upload = multer({ dest: 'public/uploads/images' })
+
 
 const Author = require('../models/author')
 const Book = require('../models/book')
 
 
-router.get('/', (req,res) => {
-  
+router.get('/', async (req,res) => {
+  res.render('book/index')
 })
 
-router.get('/new', (req,res) => {
+router.get('/new', async (req,res) => {
+  const book = await Book.find({})
+  const author = await Author.find({});
 
+  res.render('book/new', {books: book, authors: author})
 })
 
-router.post('/', bodyParser.json(), async (req,res) => {
+router.post('/', upload.single('cover'), bodyParser.json(), async (req,res) => {
+  const coverFileName = req.file.filename
   const book = new Book({
-    name: req.body.name,
     title: req.body.title,
     pageCount: req.body.pageCount,
+    coverImageName: coverFileName,
     publishDate: req.body.publishDate,
     createdAt: req.body.createdAt,
     description: req.body.description,
-    author: req.body.author,
+    author: req.body.author
   })
 
   try {
@@ -34,32 +41,3 @@ router.post('/', bodyParser.json(), async (req,res) => {
 })
 
 module.exports = router;
-
-/**
- * name: {
-    type: String,
-    required: true
-  },
-  title: {
-    type: String,
-    required: true
-  },
-  pageCount: {
-    type: Number,
-    required: true,
-  },
-  publishDate: {
-    type: Date,
-    required: true
-  },
-  createdAt:{
-    type: Date,
-    required: true,
-    default: Date.now
-  },
-  author: {
-    type: mongoose.Schema.Types.ObjectId,
-    required: false,
-    ref: 'Author'
-  }
- */

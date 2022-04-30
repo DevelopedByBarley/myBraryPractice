@@ -1,10 +1,6 @@
 const mongoose = require('mongoose');
 
 const bookModel = new mongoose.Schema({
-  name: {
-    type: String,
-    required: true
-  },
   title: {
     type: String,
     required: true
@@ -12,6 +8,10 @@ const bookModel = new mongoose.Schema({
   pageCount: {
     type: Number,
     required: true,
+  },
+  coverImageName: {
+    type: String,
+    required: true
   },
   publishDate: {
     type: Date,
